@@ -10,7 +10,6 @@ with open(os.path.join(here, 'README.txt')) as f:
 with open(os.path.join(here, 'CHANGES.txt')) as f:
     CHANGES = f.read()
 
-requires = ['cornice','setuptools','pyramid', 'zope.sqlalchemy', 'sqlalchemy', 'psycopg2']
 
 setup(name='penelope.api',
       version='0.2',
@@ -30,12 +29,18 @@ setup(name='penelope.api',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
-      install_requires=requires,
-      tests_require=requires,
+      install_requires= [
+          'setuptools',
+          'Eve[sqlalchemy]',
+          'penelope.models',
+          'Flask-SQLAlchemy',
+          'sqlalchemy',
+          'psycopg2'
+          ],
       test_suite="penelope.api",
-      entry_points = """\
-      [paste.app_factory]
-      main = penelope.api:main
-      """,
+      entry_points="""
+      [console_scripts]
+      eve = penelope.api:run
+      """
       )
 
